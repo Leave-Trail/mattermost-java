@@ -1,0 +1,17 @@
+spring.data.cassandra:
+  keyspace-name: chat
+  username: UIojjWHQWtITeuUckkTOhbTa
+  password: 2GFvz9opcJK93G_9DvAWCWKpbOLhWu39tZSd4iFtnSt3aG0BvXafPl5KsICiFOZ9XN6rhbnSLIEtq6p2sQQ,DbcotXCAhCeFuxRHkXlF9,zXphixZ-Uk0I8We08j5CQy
+  
+  schema-action: CREATE_IF_NOT_EXISTS # for dev purpose
+  request:
+    timeout: 10s
+  connection:
+    connect-timeout: 10s
+    init-query-timeout: 10s
+
+datastax.astra:
+  secure-connect-bundle: /astra/secure-connect-leave-trail.zip
+  token: AstraCS:UIojjWHQWtITeuUckkTOhbTa:f269461c5bd916b28322562adedb5ca61ffd8b7ed5075e67df72eb01bacae2b0
+
+

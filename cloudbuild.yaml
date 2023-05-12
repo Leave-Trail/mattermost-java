@@ -1,0 +1,17 @@
+steps:
+  # Build the application
+  - name: 'maven:3.6.0-jdk-11'
+    id: build
+    args: ['mvn', 'clean', 'package']
+
+  # Test the application
+  - name: 'maven:3.6.0-jdk-11'
+    id: test
+    args: ['mvn', 'test']
+
+  # Deploy the application to App Engine
+  - name: 'gcr.io/cloud-builders/gcloud'
+    id: deploy
+    args: ['app', 'deploy']
+
+timeout: 1800s

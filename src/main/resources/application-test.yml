@@ -1,0 +1,6 @@
+# Google pub/sub
+spring:
+  cloud:
+    gcp:
+      pubsub:
+        emulator-host: localhost:8085
