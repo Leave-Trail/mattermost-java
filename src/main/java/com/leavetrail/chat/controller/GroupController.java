@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 
 import com.leavetrail.chat.controller.dto.CreateGroupRequest;
 import com.leavetrail.chat.controller.dto.CreateRoomRequest;
+import com.leavetrail.chat.model.GroupChatRoom;
+import com.leavetrail.chat.model.UserGroup;
 import com.leavetrail.chat.service.GroupService;
 
 import java.util.UUID;
@@ -32,8 +34,8 @@ public class GroupController {
     }
 
     @PostMapping
-    public ResponseEntity<Group> createGroup(@RequestBody CreateGroupRequest request) {
-        Group group = groupService.createGroup(request.getName(), request.getDescription());
+    public ResponseEntity<UserGroup> createGroup(@RequestBody CreateGroupRequest request) {
+        UserGroup group = groupService.createGroup(request.getName(), request.getDescription(), UUID.fromString(request.getCreatorId()));
         return new ResponseEntity<>(group, HttpStatus.CREATED);
     }
 
@@ -44,14 +46,14 @@ public class GroupController {
     }
 
     @PostMapping("/{groupId}/rooms")
-    public ResponseEntity<Room> createRoom(@PathVariable UUID groupId, @RequestBody CreateRoomRequest request) {
-        Room room = groupService.createRoom(groupId, request.getName());
+    public ResponseEntity<GroupChatRoom> createRoom(@PathVariable UUID groupId, @RequestBody CreateRoomRequest request) {
+        GroupChatRoom room = groupService.createChatRoom(groupId, request.getName());
         return new ResponseEntity<>(room, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{groupId}/rooms/{roomId}")
     public ResponseEntity<Void> deleteRoom(@PathVariable UUID groupId, @PathVariable UUID roomId) {
-        groupService.deleteRoom(groupId, roomId);
+        groupService.deleteChatRoom(groupId, roomId);
         return ResponseEntity.noContent().build();
     }
 }

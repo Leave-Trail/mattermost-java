@@ -3,5 +3,5 @@ CREATE TABLE user_group_members (
     user_id UUID,
     joined_at TIMESTAMP,
     is_admin BOOLEAN,
-    PRIMARY KEY (group_id, user_id)
+    PRIMARY KEY ((group_id), user_id)
 );

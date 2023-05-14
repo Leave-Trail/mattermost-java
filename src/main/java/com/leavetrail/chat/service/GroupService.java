@@ -11,7 +11,7 @@ import com.leavetrail.chat.model.UserGroup;
 import com.leavetrail.chat.model.UserGroupMember;
 
 public interface GroupService {
-    UserGroup createGroup(String name, UUID creatorId);
+    UserGroup createGroup(String name,String description, UUID creatorId);
 
     UserGroupMember addUserToGroup(UUID groupId, UUID userId);
 
@@ -21,8 +21,12 @@ public interface GroupService {
 
     GroupChatRoom createChatRoom(UUID groupId, String name);
 
-    GroupChatRoomUser addUserToChatRoom(UUID chatRoomId, UUID userId);
+    GroupChatRoomUser addUserToChatRoom(UUID groupId, UUID chatRoomId, UUID userId);
 
     Message addMessageToChatRoom(UUID chatRoomId, UUID userId, String content);
+
+    void deleteGroup(UUID groupId);
+
+    void deleteChatRoom(UUID groupId, UUID roomId);
 }
 

@@ -17,6 +17,7 @@ import com.leavetrail.chat.model.UserGroupMember;
 import com.leavetrail.chat.service.GroupService;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -41,7 +42,7 @@ public class GroupServiceImpl implements GroupService {
     private MessageRepository messageRepository;
 
     @Override
-    public UserGroup createGroup(String name, UUID creatorId) {
+    public UserGroup createGroup(String name, String description, UUID creatorId) {
         UserGroup group = new UserGroup();
         group.setId(UUID.randomUUID());
         group.setName(name);
@@ -51,7 +52,7 @@ public class GroupServiceImpl implements GroupService {
         UserGroupMember creator = new UserGroupMember();
         creator.setKey(new UserGroupMember.Key(group.getId(), creatorId));
         creator.setJoinedAt(Instant.now());
-        creator.setAdmin(true);
+        creator.setIsAdmin(true);
         userGroupMemberRepository.save(creator);
 
         return group;
@@ -62,7 +63,7 @@ public class GroupServiceImpl implements GroupService {
         UserGroupMember userGroupMember = new UserGroupMember();
         userGroupMember.setKey(new UserGroupMember.Key(groupId, userId));
         userGroupMember.setJoinedAt(Instant.now());
-        userGroupMember.setAdmin(false);
+        userGroupMember.setIsAdmin(false);
         userGroupMemberRepository.save(userGroupMember);
 
         return userGroupMember;
@@ -95,9 +96,9 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public GroupChatRoomUser addUserToChatRoom(UUID chatRoomId, UUID userId) {
+    public GroupChatRoomUser addUserToChatRoom(UUID groupId, UUID chatRoomId, UUID userId) {
         GroupChatRoomUser chatRoomUser = new GroupChatRoomUser();
-        chatRoomUser.setKey(new GroupChatRoomUser.Key(chatRoomId, userId));
+        chatRoomUser.setKey(new GroupChatRoomUser.ChatRoomUserKey(groupId,chatRoomId, userId));
         chatRoomUser.setJoinedAt(Instant.now());
         chatRoomUser.setAdmin(false);
         groupChatRoomUserRepository.save(chatRoomUser);
@@ -105,19 +106,31 @@ public class GroupServiceImpl implements GroupService {
         return chatRoomUser;
     }
 
-    @Override
-    public Message addMessageToChatRoom(UUID chatRoomId, UUID userId, String content)
+
 
     @Override
     public Message addMessageToChatRoom(UUID chatRoomId, UUID userId, String content) {
         Message message = new Message();
-        message.setId(UUID.randomUUID());
-        message.setChatRoomId(chatRoomId);
+        message.setKey(new Message.MessageKey(chatRoomId,LocalDate.now(), UUID.randomUUID())   );
         message.setUserId(userId);
         message.setContent(content);
         message.setTimestamp(Instant.now());
         messageRepository.save(message);
 
         return message;
+    }
+
+
+    @Override
+    public void deleteGroup(UUID groupId) {
+        groupChatRoomRepository.deleteAllByGroupId(groupId);
+        userGroupMemberRepository.deleteAllByGroupId(groupId);
+        userGroupRepository.deleteById(groupId);
+
+    }
+
+    @Override
+    public void deleteChatRoom(UUID groupId, UUID roomId) {
+        groupChatRoomRepository.deleteById(roomId);
     }
 }

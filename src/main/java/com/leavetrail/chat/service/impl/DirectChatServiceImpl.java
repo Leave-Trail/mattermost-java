@@ -28,12 +28,13 @@ public class DirectChatServiceImpl implements DirectChatService {
     @Override
     public UserChat createDirectChat(UUID user1Id, UUID user2Id) {
         UserChat userChat1 = new UserChat();
+
         userChat1.setKey(new UserChat.Key(UUID.randomUUID(), user1Id, user2Id));
         userChat1.setCreatedAt(Instant.now());
         userChatRepository.save(userChat1);
 
         UserChat userChat2 = new UserChat();
-        userChat2.setKey(new UserChat.Key(userChat1.getKey().getUserChatId(), user2Id, user1Id));
+        userChat2.setKey(new UserChat.Key(UUID.randomUUID(), user2Id, user1Id));
         userChat2.setCreatedAt(Instant.now());
         userChatRepository.save(userChat2);
 
@@ -56,7 +57,7 @@ public class DirectChatServiceImpl implements DirectChatService {
     @Override
     public Message addMessageToDirectChat(UUID directChatId, UUID userId, String content) {
         Message message = new Message();
-        message.setId(UUID.randomUUID());
+        message.setKey(new Message.MessageKey());
         message.setChatRoomId(directChatId);
         message.setUserId(userId);
         message.setContent(content);

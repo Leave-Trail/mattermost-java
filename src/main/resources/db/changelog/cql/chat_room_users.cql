@@ -3,5 +3,5 @@ CREATE TABLE chat_room_users (
     user_id UUID,
     joined_at TIMESTAMP,
     is_admin BOOLEAN,
-    PRIMARY KEY (chat_room_id, user_id)
+    PRIMARY KEY ((chat_room_id), user_id)
 );
