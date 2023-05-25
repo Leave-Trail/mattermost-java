@@ -1,5 +1,7 @@
 CREATE TABLE user_groups (
     id UUID PRIMARY KEY,
+    owner_id UUID,
     name TEXT,
-    created_at TIMESTAMP
+    group_type TEXT,
+    created_at TIMESTAMP,
 );

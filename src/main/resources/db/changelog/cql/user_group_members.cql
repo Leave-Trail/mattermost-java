@@ -5,3 +5,4 @@ CREATE TABLE user_group_members (
     is_admin BOOLEAN,
     PRIMARY KEY ((group_id), user_id)
 );
+

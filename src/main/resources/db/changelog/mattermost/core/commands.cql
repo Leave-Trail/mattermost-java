@@ -1,0 +1,20 @@
+CREATE TABLE commands (
+    id text PRIMARY KEY,
+    token text,
+    createat bigint,
+    updateat bigint,
+    deleteat bigint,
+    creatorid text,
+    teamid text,
+    trigger text,
+    method text,
+    username text,
+    iconurl text,
+    autocomplete boolean,
+    autocompletedesc text,
+    autocompletehint text,
+    displayname text,
+    description text,
+    url text,
+    pluginid text
+);

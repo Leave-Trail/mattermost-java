@@ -5,3 +5,4 @@ CREATE TABLE group_chat_rooms (
     created_at TIMESTAMP,
     PRIMARY KEY ((group_id), id)
 );
+

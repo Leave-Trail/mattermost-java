@@ -7,3 +7,4 @@ CREATE TABLE messages (
     timestamp TIMESTAMP
     PRIMARY KEY ((chat_room_id, page_timestamp), id)
 );
+

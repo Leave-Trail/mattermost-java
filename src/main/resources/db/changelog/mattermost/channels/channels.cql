@@ -1,0 +1,21 @@
+CREATE TABLE channels (
+    id text PRIMARY KEY,
+    createat bigint,
+    updateat bigint,
+    deleteat bigint,
+    teamid text,
+    type text,
+    displayname text,
+    name text,
+    header text,
+    purpose text,
+    lastpostat bigint,
+    totalmsgcount bigint,
+    extraupdateat bigint,
+    creatorid text,
+    schemeid text,
+    groupconstrained boolean,
+    shared boolean,
+    totalmsgcountroot bigint,
+    lastrootpostat bigint
+);
